@@ -2,12 +2,15 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 # Fungsi untuk menguji login
 def test_login(username, password, expected_message):
-    # Inisialisasi driver Firefox
-    driver = webdriver.Firefox()  # Pastikan path ke GeckoDriver sudah diatur di PATH
+    # Inisialisasi driver Firefox menggunakan Remote WebDriver
+    driver = webdriver.Remote(
+        command_executor='http://localhost:4444/wd/hub',
+        desired_capabilities=DesiredCapabilities.FIREFOX
+    )
     driver.get("http://localhost:3000/login.php")
     
     # Tunggu elemen tersedia
