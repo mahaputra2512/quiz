@@ -41,7 +41,7 @@ jobs:
         php-version: '7.4'
 
     - name: Start PHP server
-      run: php -S localhost:3000 -t .
+      run: php -S localhost:3000 -t . &
 
     - name: Set up Python
       uses: actions/setup-python@v2
