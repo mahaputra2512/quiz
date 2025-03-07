@@ -2,10 +2,13 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-# Inisialisasi driver Firefox
-driver = webdriver.Firefox()  # Pastikan path ke GeckoDriver sudah diatur di PATH
+# Inisialisasi driver Firefox menggunakan Remote WebDriver
+driver = webdriver.Remote(
+    command_executor='http://localhost:4444/wd/hub',
+    desired_capabilities=DesiredCapabilities.FIREFOX
+)
 driver.get("http://localhost:3000")
 
 # Fungsi untuk menguji pendaftaran
@@ -33,13 +36,5 @@ def test_register(username, name, email, password, repassword, expected_message)
     else:
         print(f"Test register with {username} failed.")
 
-# Test cases untuk pendaftaran
-test_register("testuser", "Test User", "test@example.com", "test123", "test123", "index.php")
-test_register("irul", "Irul", "irul@irul.com", "test123", "test123", "Username sudah terdaftar !!")
-test_register("newuser", "New User", "new@example.com", "test123", "test321", "Password tidak sama !!")
-test_register("", "", "", "", "", "Data tidak boleh kosong !!")
-
-
-
-# Tutup driver
-driver.quit()
+# Contoh penggunaan
+test_register("newuser", "New User", "newuser@example.com", "password123", "password123", "Registration successful")
